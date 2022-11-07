@@ -1,5 +1,6 @@
 package com.s204000800.springordersystem.rowmmapper;
 
+import com.s204000800.springordersystem.constant.ProductCategory;
 import com.s204000800.springordersystem.model.Product;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -14,7 +15,15 @@ public class ProductRowMapper implements RowMapper<Product> {
 
         product.setProductId(resultSet.getInt("product_id"));
         product.setProductName(resultSet.getString("product_name"));
-        product.setCategory(resultSet.getString("category"));
+
+
+        String categoryStr = resultSet.getString("category");//將取出的職
+        ProductCategory category = ProductCategory.valueOf(categoryStr);//查詢ENUM是否有傳入參數的值，有就回傳
+        product.setCategory(category);
+
+        //product.setCategory(ProductCategory.valueOf(resultSet.getString("category")));
+
+
         product.setImageUrl(resultSet.getString("image_url"));
         product.setPrice(resultSet.getInt("price"));
         product.setDescription(resultSet.getString("description"));
